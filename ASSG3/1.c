@@ -30,10 +30,34 @@ void print()
 	printf("\n");
 }
 
+void reverse() {
+	struct node *Next,*temp,*looper;
+	Next = (*head).next;
+	looper = head;
+	(*head).next=NULL;
+	while(Next!=NULL) {
+		temp = Next;
+		Next = (*temp).next;
+		(*temp).next=looper;
+		looper = temp;
+	}
+	temp = tail;
+	head = tail;
+	tail = temp;
+}
+
 int main() {
-	insert(1);
-	insert(2);
-	insert(4);
+	int n,i,a;
+	printf("Enter number of terms : ");
+	scanf("%d",&n);
+	for(i=0;i<n;i++) {
+		scanf("%d",&a);
+		insert(a);
+	}
+	printf("Original input : \n");
+	print();
+	reverse();
+	printf("Reversed input : \n");
 	print();
 	return 0;
 }
