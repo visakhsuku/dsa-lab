@@ -1,7 +1,5 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include <stdbool.h>
-bool isBracket=false;
 struct node
 {
 	int value;
@@ -11,6 +9,25 @@ struct node
 };
 struct node *tree=NULL;
 int i,n,j=0;
+
+struct node* create_newnode(int value);
+int search(int ar[],int in_strt,int in_end,int value);
+struct node* buildTree(int b[],int a[],int inStrt,int inEnd);
+void printBT(struct node *temp);
+
+int main()
+{
+	scanf("%d",&n);
+	int b[n],a[n];
+	for(i=0;i<n;i++)
+		scanf("%d",&a[i]);
+	for(i=0;i<n;i++)
+		scanf("%d",&b[i]);
+	tree=buildTree(b,a,0,n-1);
+	printBT(tree);
+	return 0;
+}
+
 struct node* create_newnode(int value)
 {
 	struct node* New=(struct node*)malloc(sizeof(struct node));
@@ -19,6 +36,7 @@ struct node* create_newnode(int value)
 	New->right=NULL;
 	return New;
 }
+
 int search(int ar[],int in_strt,int in_end,int value)
 {
 	for(i=in_strt;i<=in_end;i++)
@@ -27,6 +45,7 @@ int search(int ar[],int in_strt,int in_end,int value)
 			return i;
 	}
 }
+
 struct node* buildTree(int b[],int a[],int inStrt,int inEnd)
 {
 	if(inStrt>inEnd)
@@ -39,27 +58,17 @@ struct node* buildTree(int b[],int a[],int inStrt,int inEnd)
 	prev->right=buildTree(b,a,in_index+1,inEnd);
 	return prev;
 }
-void print_Bt(struct node *temp)
+
+void printBT(struct node *temp)
 {
 	if(temp==NULL)
 	{
-		printf("( ) ");
+		printf("( )");
 		return;
 	}
 	printf("( %d ",temp->value);
-	print_Bt(temp->left);
-	print_Bt(temp->right);
-	printf(" ) ");
-}
-int main()
-{
-	scanf("%d",&n);
-	int b[n],a[n];
-	for(i=0;i<n;i++)
-		scanf("%d",&a[i]);
-	for(i=0;i<n;i++)
-		scanf("%d",&b[i]);
-	tree=buildTree(b,a,0,n-1);
-	print_Bt(tree);
-	return 0;
+	printBT(temp->left);
+	printf(" ");
+	printBT(temp->right);
+	printf(" )");
 }

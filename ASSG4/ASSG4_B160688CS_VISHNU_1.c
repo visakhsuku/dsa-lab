@@ -2,6 +2,13 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+struct node
+{
+	long int key;
+	struct node *next;
+}*Hash, *temp, *prev;
+
+
 void linearProbing();
 void quadraticProbing();
 void doubleHashing();
@@ -38,11 +45,11 @@ int main()
 		linearProbing();
 	else if(_ch == 'b')
 		quadraticProbing();
-		else if(_ch=='c')
-			doubleHashing();
-	/**	else if(_ch=='d')
-			chaining();
-			**/
+	else if(_ch == 'c')
+		doubleHashing();
+	else if(_ch == 'd')
+		chaining();
+
 	return 0;
 }
 
@@ -290,6 +297,108 @@ void doubleHashing()
 					printf("%d (%d)\n", i, hashTable[i]);
 				else
 					printf("%d ()\n", i);
+			}
+		}
+		else if(c == 't')
+		{
+			return;
+		}
+	}
+}
+
+void chaining()
+{
+	int m, i, ele, ind;
+	scanf("%d", &m);
+	Hash = (struct node*)malloc(m * sizeof(struct node));
+	for(i = 0; i < m; i++)
+		Hash[i].next = NULL;
+	char c;
+	while(1)
+	{
+		scanf("%c", &c);
+		if(c == 'i')
+		{
+			scanf("%d", &ele);
+			ind = ele % m;
+			struct node *new_node = (struct node*) malloc(sizeof(struct node));
+			new_node->key = ele;
+			new_node->next = NULL;
+			if(Hash[ind].next == NULL)
+				Hash[ind].next = new_node;
+			else
+			{
+				temp = Hash[ind].next;
+				while(temp->next != NULL)
+				{
+					temp = temp->next;
+				}
+				temp->next = new_node;
+			}
+		}
+		else if(c == 's')
+		{
+			scanf("%d", &ele);
+			for(i = 0; i < m; i++)
+			{
+				if((Hash[i].next) != NULL)
+				{
+					temp = Hash[i].next;
+					while(temp != NULL)
+					{
+						if((temp->key) == ele)
+						{
+							printf("1\n");
+							return;
+						}
+						temp = temp->next;
+					}
+				}
+			}
+			if(i == m)
+				printf("-1\n");
+		}
+		else if(c == 'd')
+		{
+			scanf("%d", &ele);
+			for(i = 0; i < m; i++)
+			{
+				if((Hash[i].next) != NULL)
+				{
+					prev = &Hash[i];
+					temp = Hash[i].next;
+					while(temp != NULL)
+					{
+						if((temp->key) == ele)
+						{
+							prev->next = temp->next;
+						}
+						prev = temp;
+						temp = temp->next;
+					}
+				}
+			}
+		}
+		else if(c == 'p')
+		{
+			for(i = 0; i < m; i++)
+			{
+				printf("%d(", i);
+				if((Hash[i].next) != NULL)
+				{
+					temp = Hash[i].next;
+					while((temp->next) != NULL)
+					{
+						printf("%ld ", temp->key);
+						temp = temp->next;
+					}
+					printf("%ld)", temp->key);
+				}
+				else
+				{
+					printf(")");
+				}
+				printf("\n");
 			}
 		}
 		else if(c == 't')
