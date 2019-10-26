@@ -2,7 +2,9 @@
 
 int main(){
 	int choice,len,k;
+	printf("Enter choice : ");
 	scanf("%d",&choice);
+	printf("Enter length : ");
 	scanf("%d",&len);
 	char s[len];
 	scanf(" %[^\n]s",s);
@@ -15,21 +17,21 @@ int main(){
 	}
 	for(i=0;i<len;i++)
 	{
-		if(s[i]>='a' && s[i]<='z')
-                {
-        		s[i]-='a';
-			s[i]+=k;
-			s[i]+=26;
-			s[i]%=26;
-			s[i]+='a';
-		}
 		if(s[i]>='A' && s[i]<='Z')
-		{
-			s[i]-='A';
+                {
+        		s[i]-='A';
 			s[i]+=k;
 			s[i]+=26;
 			s[i]%=26;
 			s[i]+='A';
+		}
+		if(s[i]>='a' && s[i]<='z')
+		{
+			s[i]-='a';
+			s[i]+=k;
+			s[i]+=26;
+			s[i]%=26;
+			s[i]+='a';
 		}
 	}
 	printf("%s\n",s);
